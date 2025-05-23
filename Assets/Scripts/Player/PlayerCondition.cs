@@ -18,10 +18,19 @@ public class PlayerCondition : MonoBehaviour, IDamagable
 
     
     // Update is called once per frame
+
+
     void Update()
     {
         if (uiCondition == null)
         {
+            UiCondition found = FindObjectOfType<UiCondition>();
+            if (found != null)
+            {
+                uiCondition = found;
+                Debug.Log("[PlayerCondition] uiCondition을 강제로 연결했습니다.");
+                return;
+            }
             Debug.LogWarning("uiCondition이 아직 할당되지 않았습니다.");
             return;
         }

@@ -9,7 +9,8 @@ public enum ConsumableType
 {
     Health,
     stamina,
-    destroyObject
+    destroyObject,
+    buff
 }
 
 [System.Serializable]
