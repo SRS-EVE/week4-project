@@ -20,6 +20,10 @@ public class AcquisitionItem : MonoBehaviour
                     FindObjectOfType<ItemUseInventory>().AddItem(data, 1);
                     Destroy(gameObject);
                     break;
+                case ConsumableType.buff:
+                    FindObjectOfType<ItemUseInventory>().AddItem(data, 1);
+                    Destroy(gameObject);
+                    break;
             }
             
         }

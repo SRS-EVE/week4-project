@@ -4,7 +4,7 @@ using UnityEngine;
 public class ItemUseInventory : MonoBehaviour
 {
     public TextMeshProUGUI[] countTexts; // 슬롯 수량 텍스트 (길이 4)
-    public ConsumableType[] itemTypes = new ConsumableType[3]; // 슬롯 아이템 종류
+    public ConsumableType[] itemTypes = new ConsumableType[4]; // 슬롯 아이템 종류
     private int[] itemCounts = new int[4]; // 슬롯별 수량
 
     private PlayerCondition condition;
@@ -12,12 +12,11 @@ public class ItemUseInventory : MonoBehaviour
     public float healValue = 20f;
     public float staminaValue = 10f;
 
-    void Start()
+    private void Start()
     {
         condition = CharacterManager.Instance.Player.condition;
         UpdateUI();
     }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1)) UseItem(0);
@@ -28,18 +27,23 @@ public class ItemUseInventory : MonoBehaviour
 
     public void AddItem(ConsumableType type, int amount)
     {
-        for (int i = 0; i < itemTypes.Length; i++)
-        {
-            if (itemTypes[i] == type)
-            {
-                itemCounts[i] += amount;
-                UpdateUI();
-                return;
-            }
-        }
+        Debug.Log($"[AddItem] 호출됨 - {type}");
 
-        Debug.LogWarning("아이템 타입이 어떤 슬롯에도 지정되지 않았습니다.");
+    for (int i = 0; i < itemTypes.Length; i++)
+    {
+        Debug.Log($"[AddItem] 슬롯 {i} = {itemTypes[i]} vs {type}");
+
+        if (itemTypes[i] == type)
+        {
+            itemCounts[i] += amount;
+            Debug.Log($"[AddItem] {type} 아이템 추가됨, 현재 개수: {itemCounts[i]}");
+            UpdateUI();
+            return;
+        }
     }
+
+    Debug.LogWarning($"[AddItem] {type} 을 itemTypes에서 찾지 못함!");
+}
 
     public void UseItem(int index)
     {
@@ -55,6 +59,9 @@ public class ItemUseInventory : MonoBehaviour
             case ConsumableType.Health:
                 condition.Heal(staminaValue);
                 break;
+            case ConsumableType.buff:
+                BuffManager.Instance.ApplySpeedBuff();
+                break;
         }
 
         itemCounts[index]--;
@@ -63,9 +70,14 @@ public class ItemUseInventory : MonoBehaviour
 
     private void UpdateUI()
     {
-        for (int i = 0; i < countTexts.Length; i++)
+        for (int i = 0; i < countTexts.Length && i < itemCounts.Length; i++)
         {
-            countTexts[i].text = itemCounts[i].ToString();
+            Debug.Log($"[UpdateUI] 슬롯 {i} 텍스트 = {itemCounts[i]}");
+            if (countTexts[i] != null)
+                countTexts[i].text = itemCounts[i].ToString();
+            else
+                Debug.LogWarning($"[UpdateUI] countTexts[{i}] 가 null입니다!");
         }
     }
+
 }
