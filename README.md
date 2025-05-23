@@ -25,7 +25,6 @@ week4-project/
 │   ├── Item/                    # 아이템 관련 스크립트
 │   │   ├── AcquisitionItem.cs
 │   │   ├── ItemObject.cs
-│   │   └── SpeedEffect.cs
 │
 │   ├── Obstacle/                # 장애물 관련 스크립트
 │   │   ├── CampFire.cs
