@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
                                                             // InputAction.CallbackContext context = 유니티의 입력 시스템에서
                                                             // 입력 이벤트가 발생했을 때 전달되는 정보를 담는 매개변수
     {
-        Debug.Log($"Move context: {context.phase}, value: {context.ReadValue<Vector2>()}");
+        // Debug.Log($"Move context: {context.phase}, value: {context.ReadValue<Vector2>()}");
 
 
         if (context.phase == InputActionPhase.Performed) // context의 상태가 Performed인 상태(입력이 성공적으로 수행된 상태 ex : 키를 누르고 있는중 or 눌렀을 때 )
